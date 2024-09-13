@@ -1,0 +1,5 @@
+.env
+!uploads/.gitkeep
+node_modules
+.DS_Store
+script.js
