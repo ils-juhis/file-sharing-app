@@ -24,7 +24,7 @@ steps:
       - '3000' # Replace with your desired region
       - '--allow-unauthenticated'
       - '--set-env-vars'
-        'APP_BASE_URL=http://localhost:3000,
+      - 'APP_BASE_URL=http://localhost:3000,
         NODEMAILER_EMAIL=unknown.user100209@gmail.com,
         NODEMAILER_PASS=oghnjjrpvpdellnh'
 
