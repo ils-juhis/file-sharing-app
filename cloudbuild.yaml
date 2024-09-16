@@ -1,0 +1,41 @@
+steps:
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/gcp-training-710/gcf-artifacts/file-sharing-app', '.']
+
+  # Step 2: Push the Docker image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/gcp-training-710/gcf-artifacts/file-sharing-app']
+
+  # Step 3: Deploy the image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'file-sharing-juhi'  # Replace with your Cloud Run service name
+      - '--image'
+      - 'us-central1-docker.pkg.dev/gcp-training-710/gcf-artifacts/file-sharing-app'
+      - '--platform'
+      - 'managed'
+      - '--region'
+      - 'us-central1'  # Replace with your desired region
+      - '--port'
+      - '3000' # Replace with your desired region
+      - '--allow-unauthenticated'
+      - '--set-env-vars'
+        'APP_BASE_URL=http://localhost:3000,
+        NODEMAILER_EMAIL=unknown.user100209@gmail.com,
+        NODEMAILER_PASS=oghnjjrpvpdellnh'
+
+# Substitutions for variables, if needed
+# substitutions:
+#   _SERVICE_NAME: 'my-app'
+#   _REGION: 'us-central1'
+
+# Optionally, define the Cloud Build trigger settings
+options:
+  logging: CLOUD_LOGGING_ONLY
+  
+images:
+  - 'us-central1-docker.pkg.dev/gcp-training-710/gcf-artifacts/file-sharing-app'
